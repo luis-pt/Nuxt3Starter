@@ -1,8 +1,24 @@
 <script setup>
-    const { data, pending, error, refresh } = await useFetch('http://teste.com.pt/bliss-market/wp-json/wp/v2/posts', {
-        query: { slug: 'ux-pie' }
-    })
+    
     const route = useRoute()
+    const slug = ref('')
+
+    if(route.params.slug) {
+        let lastIndex = route.params.slug.length - 1
+        
+        if(!route.params.slug[lastIndex]) {
+            slug.value = route.params.slug[lastIndex - 1]
+        } else {
+            slug.value = route.params.slug[lastIndex]
+        }
+    } else {
+        slug.value = 'home'
+    }
+
+    const { data, pending, error, refresh } = await useFetch('http://teste.com.pt/bliss-market/wp-json/wp/v2/posts', {
+        query: { slug: slug.value }
+    })
+
 </script>
 <template>
     <div>
@@ -11,7 +27,9 @@
         <hr>
         <br>
         <!-- {{ data }} -->
-        {{ route }}
+        {{ data[0].title.rendered }}
+        <br>
+        {{ data[0].content.rendered }}
         <br><br>
         <hr>
         <br>
