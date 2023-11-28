@@ -12,10 +12,10 @@
             slug.value = route.params.slug[lastIndex]
         }
     } else {
-        slug.value = 'home'
+        slug.value = 'produtos'
     }
 
-    const { data, pending, error, refresh } = await useFetch('http://teste.com.pt/bliss-market/wp-json/wp/v2/posts', {
+    const { data, pending, error, refresh } = await useFetch('http://teste.com.pt/bliss-market/wp-json/wp/v2/pages', {
         query: { slug: slug.value }
     })
 
